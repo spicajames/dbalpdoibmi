@@ -1,5 +1,5 @@
 {
-    "name": "doctrine/dbal",
+    "name": "spicajames/dbalpdoibmi",
     "type": "library",
     "description": "Database Abstraction Layer",
     "keywords": ["dbal", "database", "persistence", "queryobject"],
@@ -24,10 +24,5 @@
     },
     "autoload": {
         "psr-0": { "Doctrine\\DBAL\\": "lib/" }
-    },
-    "extra": {
-        "branch-alias": {
-            "dev-master": "2.4.x-dev"
-        }
-    }
+    }  
 }

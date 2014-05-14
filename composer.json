@@ -36,15 +36,17 @@
     },
     "autoload": {
         "psr-0": {
-            "Doctrine\\DBAL\\": "../../lib/juanito/"
+            "Doctrine\\DBAL\\": "lib/"
         }
+    },
+    "scripts": {        
+        "post-package-install": [            
+            "touch prueba.txt"            
+        ]
     },
     "extra": {
         "branch-alias": {
             "dev-master": "1.0.0"
-        },     
-        "installer-paths": {
-            "vendor/doctrine/dbal": ["vendor1/package1"]
-        }    
+        }   
     }    
 }

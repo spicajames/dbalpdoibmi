@@ -44,7 +44,7 @@
             "dev-master": "1.0.0"
         },     
         "installer-paths": {
-            "vendor/doctrine1": ["vendor/package"]
+            "vendor/doctrine/dbal": ["vendor1/package1"]
         }    
     }    
 }

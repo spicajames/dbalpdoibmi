@@ -53,8 +53,10 @@ class DB2iSeriesPlatform extends AbstractPlatform {
             'decimal' => 'decimal',
             'double' => 'float',
             'real' => 'float',
+            'float' => 'float',
             'timestamp' => 'datetime',
             'timestmp' => 'datetime',
+            'blob' => 'text',
         );
     }
 
@@ -593,8 +595,15 @@ and table_name = UPPER('" . $table . "')
 
         $limit = (int) $limit;
         $offset = (int) (($offset)? : 0);
-
-        // Todo OVER() needs ORDER BY data!
+        
+        /**
+         * Easy fix for order by in OVER fucntion:
+         * With this new line, outside query gets params from the internal query,
+         * this way there is no need to pass OVER() param for order by
+         */
+        $first = $limit + $offset;
+        $query .= " FETCH FIRST {$first} ROWS ONLY";
+        
         $sql = 'SELECT db22.* FROM (SELECT ROW_NUMBER() OVER() AS DC_ROWNUM, db21.* ' .
                 'FROM (' . $query . ') db21) db22 WHERE db22.DC_ROWNUM BETWEEN ' . ($offset + 1) . ' AND ' . ($offset + $limit);
 
@@ -744,6 +753,7 @@ and table_name = UPPER('" . $table . "')
         }
     }
 
+
     /**
      * Get the Doctrine type that is mapped for the given database column type.
      *
@@ -762,6 +772,27 @@ and table_name = UPPER('" . $table . "')
         }
 
         return $this->doctrineTypeMapping[$dbType];
+    }
+
+    /**
+    * {@inheritDoc}
+    */
+    public function getDateTimeFormatString()
+    {
+        return 'Y-m-d H:i:s.u';
+    }
+    
+    
+    
+    /**
+     * Maximum length of any given column name identifier.
+     * DB2 support maximum length name alias of 32
+     *
+     * {@inheritDoc}
+     */
+    public function getMaxIdentifierLength()
+    {
+        return 29;
     }
 
 }

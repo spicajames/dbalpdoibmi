@@ -43,7 +43,10 @@ class DB2iSeriesSchemaManager extends AbstractSchemaManager {
     public function listTableNames()
     {
         $sql = $this->_platform->getListTablesSQL($this->_conn->getDatabase());
-        $sql .= " AND TABLE_OWNER = UPPER('" . $this->_conn->getUsername() . "')";
+       /*
+        * Some times can't garantee all tables are created using the same user
+       */ 
+       //$sql .= " AND TABLE_OWNER = UPPER('".$this->_conn->getUsername()."')";     
 
         $tables = $this->_conn->fetchAll($sql);
 

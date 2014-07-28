@@ -89,8 +89,12 @@ class Driver implements \Doctrine\DBAL\Driver {
      * @return string  The DSN.
      */
     private function _constructPdoDsn(array $params)
-    {
-        return 'odbc:' . $params['dbname'];
+    {  
+        /**
+         * When using symfony2 this value must be set on parameters.yml using database_odbc as name
+         * this allow using odbc DSN with a diferent name that database
+         */
+        return 'odbc:'.$params['driverOptions']["odbc"];
     }
 
     /**
